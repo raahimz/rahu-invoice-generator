@@ -1,118 +1,173 @@
-import Image from "next/image";
-import { Inter } from "next/font/google";
-
-const inter = Inter({ subsets: ["latin"] });
+import { DatePicker } from "@/components/date-picker";
+import { Invoice } from "@/components/invoice";
+import { Button, Input, Textarea } from "@material-tailwind/react";
+import { useRef, useState } from "react";
+import { useReactToPrint } from "react-to-print";
 
 export default function Home() {
+  const [fullName, setFullName] = useState('Raahim Zeeshan');
+  const [addressLine1, setAddressLine1] = useState('166, Street No. 11, Shaheed-e-Millat');
+  const [addressLine2, setAddressLine2] = useState('Road, Karachi, 74800, Pakistan');
+  const [phoneNumber, setPhoneNumber] = useState('Tel: +92 331 3640109');
+  const [date, setDate] = useState(new Date());
+  const [companyCode, setCompanyCode] = useState('2272');
+  const [projectRole, setProjectRole] = useState('Jr. Software Developer');
+  const [description, setDescription] = useState('Lorem Ipsum Doler Emet');
+  const [totalHours, setTotalHours] = useState(10.5);
+  const [invoiceNumber, setInvoiceNumber] = useState(19);
+  const [recipientFullName, setRecipientFullName] = useState(`Suzanne Evers
+Barbarians, LLC
+San Francisco, US
+`);
+  const [specialNotes, setSpecialNotes] = useState(`Payoneer Payment ID:
+Muhammad Zeeshan
+Customer ID: 56305267
+dr.promohands@gmail.com`);
+
+  const invoiceRef = useRef(null);
+
+  const getInvoiceTitle = () => {
+    const part1 = companyCode;
+
+    const year = String(date.getFullYear()).slice(2, 4);
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    const part2 = `${year}${month}${day}`
+
+    const part3 = String(invoiceNumber).padStart(4, '0');
+
+    return `Invoice_M_Raahim_${part1}_${part2}_${part3}`;
+  };
+
+  const downloadClickedHandler = useReactToPrint({
+    documentTitle: getInvoiceTitle(),
+    content: () => invoiceRef.current,
+  });
+
+
   return (
-    <main
-      className={`flex min-h-screen flex-col items-center justify-between p-24 ${inter.className}`}
-    >
-      <div className="z-10 max-w-5xl w-full items-center justify-between font-mono text-sm lg:flex">
-        <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
-          Get started by editing&nbsp;
-          <code className="font-mono font-bold">src/pages/index.tsx</code>
-        </p>
-        <div className="fixed bottom-0 left-0 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:h-auto lg:w-auto lg:bg-none">
-          <a
-            className="pointer-events-none flex place-items-center gap-2 p-8 lg:pointer-events-auto lg:p-0"
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{" "}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className="dark:invert"
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
+    <div className='p-4'>
+      <div className='flex flex-row gap-8 border-2 rounded-md p-8 w-fit'>
+        {/* <div className='flex flex-col gap-4 w-[0]'>
+          {/* <Input
+            variant='standard'
+            label='Full Name'
+            value={fullName}
+            onChange={(e) => setFullName(e.target.value)}
+            color='teal'
+            crossOrigin={undefined}
+          />
+          <Input
+            variant='standard'
+            label='Address Line #1'
+            value={addressLine1}
+            onChange={(e) => setAddressLine1(e.target.value)}
+            color='teal'
+            crossOrigin={undefined}
+          />
+          <Input
+            variant='standard'
+            label='Address Line #2'
+            value={addressLine2}
+            onChange={(e) => setAddressLine2(e.target.value)}
+            color='teal'
+            crossOrigin={undefined}
+          />
+          <Input
+            variant='standard'
+            label='Phone Number'
+            value={phoneNumber}
+            onChange={(e) => setPhoneNumber(e.target.value)}
+            color='teal'
+            crossOrigin={undefined}
+          /> 
+          
+        </div> */}
+        <div className='flex flex-col gap-4 w-96'>
+          {/* <Input
+            variant='standard'
+            label='Company Code'
+            value={companyCode}
+            onChange={(e) => setCompanyCode(e.target.value)}
+            color='teal'
+            crossOrigin={undefined}
+          /> */}
+          {/* <Input
+            variant='standard'
+            label='Project Role'
+            value={projectRole}
+            onChange={(e) => setProjectRole(e.target.value)}
+            color='teal'
+            crossOrigin={undefined}
+          /> */}
+          <Input
+            variant='standard'
+            label='Invoice Number'
+            value={invoiceNumber}
+            onChange={(e) => setInvoiceNumber(parseInt(e.target.value))}
+            type='number'
+            color='teal'
+            crossOrigin={undefined}
+          />
+          <Input
+            variant='standard'
+            label='Total Hours'
+            value={totalHours}
+            onChange={(e) => setTotalHours(parseFloat(e.target.value))}
+            type='number'
+            color='teal'
+            crossOrigin={undefined}
+          />
+          <DatePicker
+            date={date}
+            setDate={setDate}
+          />
+        </div>
+        <div className='flex flex-col gap-4 w-96'>
+          {/* <Textarea
+            label='Recipient'
+            value={recipientFullName}
+            onChange={(e) => setRecipientFullName(e.target.value)}
+            color='teal'
+          /> */}
+          <Textarea
+            label='Description'
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+            color='teal'
+          />
+          {/* <Textarea
+            label='Special Notes'
+            value={specialNotes}
+            onChange={(e) => setSpecialNotes(e.target.value)}
+            color='teal'
+          /> */}
+          <Button onClick={() => downloadClickedHandler()} placeholder={undefined} color="teal" variant="outlined">
+            Download
+          </Button>
         </div>
       </div>
-
-      <div className="relative flex place-items-center before:absolute before:h-[300px] before:w-full sm:before:w-[480px] before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-full sm:after:w-[240px] after:translate-x-1/3 after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700/10 after:dark:from-sky-900 after:dark:via-[#0141ff]/40 before:lg:h-[360px]">
-        <Image
-          className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert"
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
+      <br />
+      <div className='w-[802px] min-h-[1050px] drop-shadow-lg' ref={invoiceRef}>
+        <Invoice
+          fullName={fullName}
+          address={{
+            line1: addressLine1,
+            line2: addressLine2,
+            phoneNumber: phoneNumber
+          }}
+          date={date}
+          recipient={{
+            fullName: recipientFullName,
+            companyCode: companyCode
+          }}
+          projectRole={projectRole}
+          description={description}
+          totalHours={totalHours}
+          invoiceNumber={invoiceNumber}
+          specialNotes={specialNotes}
         />
       </div>
-
-      <div className="mb-32 grid text-center lg:max-w-5xl lg:w-full lg:mb-0 lg:grid-cols-4 lg:text-left">
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Docs{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Find in-depth information about Next.js features and API.
-          </p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Learn{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Learn about Next.js in an interactive course with&nbsp;quizzes!
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Templates{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Discover and deploy boilerplate example Next.js&nbsp;projects.
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Deploy{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50 text-balance`}>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
+    </div>
   );
 }
