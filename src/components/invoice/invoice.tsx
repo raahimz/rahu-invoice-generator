@@ -28,7 +28,7 @@ export default function Invoice(props: InvoiceProps) {
                 <div className='text-2xl w-[200px] text-teal-500 font-bold'>
                     {props.fullName}
                 </div>
-                <div className='flex flex-col items-center w-[33.33%]'>
+                <div className='flex flex-col items-center w-[33.33%] text-sm'>
                     <p>{props.address.line1}</p>
                     <p>{props.address.line2}</p>
                     <p>{props.address.phoneNumber}</p>
@@ -77,9 +77,9 @@ export default function Invoice(props: InvoiceProps) {
                         width={'3/4'}
                     />
                     <Container
-                        title='Total Hours'
+                        title='Total Hours/Amount'
                         body={<div>
-                            <p>{props.totalHours}</p>
+                            <p>{props.totalHours} hr  × ${props.hourlyRate}<br />= <b>{props.totalHours * props.hourlyRate} USD</b></p>
                         </div>}
                         width={'1/4'}
                     />

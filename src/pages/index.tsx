@@ -166,6 +166,7 @@ dr.promohands@gmail.com`);
           totalHours={totalHours}
           invoiceNumber={invoiceNumber}
           specialNotes={specialNotes}
+          hourlyRate={7.5}
         />
       </div>
     </div>

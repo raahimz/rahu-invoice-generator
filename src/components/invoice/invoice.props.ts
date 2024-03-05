@@ -15,4 +15,5 @@ export interface InvoiceProps {
     totalHours: number;
     invoiceNumber: number;
     specialNotes: string;
+    hourlyRate: number;
 }
