@@ -3,6 +3,7 @@ import { Container } from "./container";
 import { InvoiceProps } from "./invoice.props";
 
 const month = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+const day = [ "Sunday","Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 
 export default function Invoice(props: InvoiceProps) {
     const getInvoiceId = () => {
@@ -25,8 +26,13 @@ export default function Invoice(props: InvoiceProps) {
     return (
         <div className='bg-white text-black flex flex-col h-[1050px] justify-between gap-12 p-8'>
             <div className='flex justify-between flex-row items-center text-center'>
-                <div className='text-2xl w-[200px] text-teal-500 font-bold'>
-                    {props.fullName}
+                <div className='flex flex-col'>
+                    <div className='text-2xl w-[200px] text-teal-500 font-bold'>
+                        {props.fullName}
+                    </div>
+                    <div>
+                        {props.email}
+                    </div>
                 </div>
                 <div className='flex flex-col items-center w-[33.33%] text-sm'>
                     <p>{props.address.line1}</p>
@@ -39,14 +45,11 @@ export default function Invoice(props: InvoiceProps) {
             </div>
             <div className='flex justify-end flex-row items-center gap-2'>
                 <div className='flex flex-col items-end gap-1 p-2'>
-                    <p>Month</p>
-                    <p>Year</p>
+                    <p>Date</p>
                     <p>Invoice #</p>
                 </div>
                 <div className='flex flex-col border-2 border-black rounded-sm gap-1 p-2'>
-                    <p>{month[props.date.getMonth()]}</p>
-                    <div className='h-[1px] bg-black' />
-                    <p>{props.date.getFullYear()}</p>
+                    <p className=''>{props.date.toDateString()}</p>
                     <div className='h-[1px] bg-black' />
                     <p>{getInvoiceId()}</p>
                 </div>
@@ -61,7 +64,7 @@ export default function Invoice(props: InvoiceProps) {
                         width={'full'}
                     />
                     <Container
-                        title='Role'
+                        title='Services'
                         body={<div>
                             <p>{props.projectRole}</p>
                         </div>}

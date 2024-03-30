@@ -1,5 +1,6 @@
 export interface InvoiceProps {
     fullName: string;
+    email: string;
     address: {
         line1: string;
         line2: string;

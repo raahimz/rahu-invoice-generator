@@ -4,25 +4,29 @@ import { Button, Input, Textarea } from "@material-tailwind/react";
 import { useRef, useState } from "react";
 import { useReactToPrint } from "react-to-print";
 
+
 export default function Home() {
   const [fullName, setFullName] = useState('Raahim Zeeshan');
+  const [email, setEmail] = useState('raahim.home@gmail.com');
   const [addressLine1, setAddressLine1] = useState('166, Street No. 11, Shaheed-e-Millat');
   const [addressLine2, setAddressLine2] = useState('Road, Karachi, 74800, Pakistan');
   const [phoneNumber, setPhoneNumber] = useState('Tel: +92 331 3640109');
   const [date, setDate] = useState(new Date());
   const [companyCode, setCompanyCode] = useState('2272');
-  const [projectRole, setProjectRole] = useState('Jr. Software Developer');
+  const [projectRole, setProjectRole] = useState('Software Development Services');
   const [description, setDescription] = useState('Lorem Ipsum Doler Emet');
   const [totalHours, setTotalHours] = useState(10.5);
   const [invoiceNumber, setInvoiceNumber] = useState(19);
-  const [recipientFullName, setRecipientFullName] = useState(`Suzanne Evers
-Barbarians, LLC
-San Francisco, US
+  const [recipientFullName, setRecipientFullName] = useState(`Barbarians Inc.
+200 W. Sahara Ave Unit 3301
+Las Vegas, NV  89102
+United States
 `);
-  const [specialNotes, setSpecialNotes] = useState(`Payoneer Payment ID:
-Muhammad Zeeshan
-Customer ID: 56305267
-dr.promohands@gmail.com`);
+  const [specialNotes, setSpecialNotes] = useState(`Payment Platform: Payoneer
+Name: Muhammad Zeeshan
+User ID: 56305267
+Email: dr.promohands@gmail.com`);
+  const month = ["January","February","March","April","May","June","July","August","September","October","November","December"];
 
   const invoiceRef = useRef(null);
 
@@ -151,6 +155,7 @@ dr.promohands@gmail.com`);
       <div className='w-[802px] min-h-[1050px] drop-shadow-lg' ref={invoiceRef}>
         <Invoice
           fullName={fullName}
+          email={email}
           address={{
             line1: addressLine1,
             line2: addressLine2,
@@ -161,7 +166,7 @@ dr.promohands@gmail.com`);
             fullName: recipientFullName,
             companyCode: companyCode
           }}
-          projectRole={projectRole}
+          projectRole={`${month[date.getMonth()]} ${date.getFullYear()} ${projectRole}`}
           description={description}
           totalHours={totalHours}
           invoiceNumber={invoiceNumber}
